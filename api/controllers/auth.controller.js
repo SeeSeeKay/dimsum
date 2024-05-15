@@ -94,7 +94,7 @@ const genAccessToken = (user)=> {
   return jwt.sign(
   {userId: user._id },
   access_secret,
-  {expiresIn: '1d'} // 1h
+  {expiresIn: '1d'}
 )};
 
 // Generate a refresh token
