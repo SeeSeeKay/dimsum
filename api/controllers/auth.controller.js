@@ -2,8 +2,8 @@ import User, { userValidation } from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import createError from '../helpers/createError.js';
-const access_secret = process.env.ACCESS_SECRET;
-const refresh_secret = process.env.REFRESH_SECRET;
+const access_secret = "dimsum0abcdefghijkjlmnopqrstuvwxyz";
+const refresh_secret = "dimsum0abcdefghijkjlmnopqrstuvwxyz";
 
 // Sign up
 export const signUp = async (req, res, next) => {
@@ -94,7 +94,7 @@ const genAccessToken = (user)=> {
   return jwt.sign(
   {userId: user._id },
   access_secret,
-  {expiresIn: '1d'} // 1h
+  {expiresIn: '1d'}
 )};
 
 // Generate a refresh token
