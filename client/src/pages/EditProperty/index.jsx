@@ -23,7 +23,7 @@ export default function EditProperty() {
     bathrooms: 1,
     furnished: false,
     parking: false,
-    imageUrl: null,
+    imageBase64: null,
   });
   
   
@@ -42,7 +42,7 @@ export default function EditProperty() {
 
   const handleChange = (e) => {
     const { name, checked, value, files } = e.target; // Changed 'file' to 'files' to correctly access the files property
-    if (name === 'imageUrl') {
+    if (name === 'imageBase64') {
       setFormData({
         ...formData,
         [name]: files[0] // Changed 'file' to 'files[0]' to correctly access the first file in the array
@@ -70,7 +70,7 @@ export default function EditProperty() {
   
       const propertyData = {
         ...formData,
-        imageUrl: formData.imageUrl,
+        imageBase64: formData.imageBase64,
         ownerId: userInfo.data._id
       };
       
@@ -169,7 +169,7 @@ export default function EditProperty() {
                           type="file"
                           ref={fileRef}
                           className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 "
-                          name="imageUrl"
+                          name="imageBase64"
                           onChange={handleChange}
                         />
                         <div className='w-full h-64 md:80 lg:h-96 rounded-md shadow-md bg-gray-100 flex justify-center items-center flex-col'>
@@ -180,7 +180,7 @@ export default function EditProperty() {
                                  hover:border-2 border-gray-300">
                               {!imageForDisplay ? (
                                 <img
-                                src={formData.imageUrl}
+                                src={formData.imageBase64}
                                 alt="Selected"
                                 onClick={()=> fileRef.current.click()}
                                 className="w-full h-full rounded-md"

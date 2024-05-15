@@ -96,7 +96,7 @@ export default function Property() {
             </div>
             <div className="h-96 my-2">
               <img 
-                src={property.imageUrl} 
+                src={property.imageBase64} 
                 alt="Property" 
                 className="object-cover object-center h-full w-full rounded-md shadow-md"
               />

@@ -11,9 +11,9 @@ const PropertySchema = new mongoose.Schema({
   parking: {type: Boolean, required: true},
   bedrooms: {type: Number},
   bathrooms: {type: Number},
-  imageUrl: {type: String, required: false },
+  imageBase64: {type: String, required: false },
   ownerId: {type: mongoose.Types.ObjectId, ref: 'User', required: true},
-  // imageUrl: {type: String, default: 'https://dummyimage.com/720x400'},
+  // imageBase64: {type: String, default: 'https://dummyimage.com/720x400'},
 }, {timestamps: true });
 
 // Adding virtual id for fronend frienly

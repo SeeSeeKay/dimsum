@@ -1,4 +1,4 @@
 cd client
-npm start &
-cd ../server/
-python server.py
+npm run dev &
+cd ../api
+npm run dev

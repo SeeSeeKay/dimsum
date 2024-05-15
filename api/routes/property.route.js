@@ -14,7 +14,7 @@ import uploadOptions from '../middleware/multer.middleware.js';
 const router = express.Router();
 
 // Uploding files
-const uploadImage = uploadOptions.single('imageUrl');
+const uploadImage = uploadOptions.single('imageBase64');
 
 // Tetst search
 router.get('/get', searchProperties);

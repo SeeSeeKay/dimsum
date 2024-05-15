@@ -1,5 +1,6 @@
 import Property from '../models/property.model.js';
 import createError from '../helpers/createError.js';
+import fs from 'fs';
 
 // Add property
 export const addProperty = async (req, res, next) => {
@@ -8,7 +9,7 @@ export const addProperty = async (req, res, next) => {
   } = req.body;
 
   try {
-    // // Ensure that all required fields are provided
+    // Ensure that all required fields are provided
     if (!title || !description || !address || !price || 
       !listingType || !category || !bedrooms || !bathrooms) {
       return next(createError(400, "Please provide all required fields."));
@@ -18,10 +19,17 @@ export const addProperty = async (req, res, next) => {
     const file = req.file;
     if (!file) return next(createError(400, 'No image in the request'));
     
-    const fileName = file.filename;
-    const basePath = `${req.protocol}://${req.get('host')}/images/`;
+    // const fileName = file.filename;
+    // const basePath = `${req.protocol}://${req.get('host')}/images/`;
 
-    console.log(basePath+fileName)
+    // Read the file as binary data
+    const data = fs.readFileSync(file.path);
+
+    // Convert binary data to base64
+    const imageBase64 = Buffer.from(data).toString('base64');
+
+    // Delete the temporary file after conversion
+    fs.unlinkSync(file.path);
 
     // Ensure that ownerId is present in the request (assuming it's populated by middleware)
     const ownerId = req.user;
@@ -41,7 +49,7 @@ export const addProperty = async (req, res, next) => {
       parking,
       bedrooms,
       bathrooms,
-      imageUrl: `${basePath}${fileName}`,
+      imageBase64: `data:image/jpeg;base64,${imageBase64}`, // Assuming the image is JPEG
       ownerId
     });
   
@@ -203,7 +211,7 @@ export const updateProperty = async (req, res, next) => {
       parking,
       bedrooms,
       bathrooms,
-      imageUrl: `${basePath}${fileName}`,
+      imageBase64: `${basePath}${fileName}`,
       ownerId
     }, { new: true });
 
