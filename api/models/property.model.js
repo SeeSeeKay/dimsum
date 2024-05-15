@@ -13,10 +13,9 @@ const PropertySchema = new mongoose.Schema({
   bathrooms: {type: Number},
   imageBase64: {type: String, required: false },
   ownerId: {type: mongoose.Types.ObjectId, ref: 'User', required: true},
-  // imageBase64: {type: String, default: 'https://dummyimage.com/720x400'},
 }, {timestamps: true });
 
-// Adding virtual id for fronend frienly
+// Adding virtual id for frontend friendliness
 PropertySchema.virtual('id').get(function() {
   return this._id.toHexString();
 })

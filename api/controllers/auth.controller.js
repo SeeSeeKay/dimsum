@@ -27,7 +27,7 @@ export const signUp = async (req, res, next) => {
 
     // check if username or user email exists in the database
     const userExist = await User.findOne({ email })
-    if(userExist) return next(createError(409, 'This user already exist!'));
+    if(userExist) return next(createError(409, 'This user already exists!'));
 
     // Create the new user
     const newUser = new User({ 

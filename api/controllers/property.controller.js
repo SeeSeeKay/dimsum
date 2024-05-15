@@ -199,6 +199,15 @@ export const updateProperty = async (req, res, next) => {
     const fileName = file.filename;
     const basePath = `${req.protocol}://${req.get('host')}/images/`;
 
+    // Read the file as binary data
+    const data = fs.readFileSync(file.path);
+
+    // Convert binary data to base64
+    const imageBase64 = Buffer.from(data).toString('base64');
+
+    // Delete the temporary file after conversion
+    fs.unlinkSync(file.path);
+
     // Update the property
     property = await Property.findByIdAndUpdate(id, {
       title,
@@ -211,7 +220,7 @@ export const updateProperty = async (req, res, next) => {
       parking,
       bedrooms,
       bathrooms,
-      imageBase64: `${basePath}${fileName}`,
+      imageBase64: `data:image/jpeg;base64,${imageBase64}`,
       ownerId
     }, { new: true });
 

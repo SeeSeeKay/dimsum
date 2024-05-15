@@ -74,7 +74,7 @@ const Sidebar = () => {
               src={logo} alt='Logo' 
             />
           </div>
-          <span className="text-secondary text-2xl md:block">ImmoMarket</span>
+          <span className="text-secondary text-2xl md:block">Assignment 1</span>
         </Link>
 
         {/* Main */}
@@ -143,8 +143,8 @@ const Sidebar = () => {
       <footer className='lg:pl-64 '>
         <div className="bg-gray-100 w-full">
           <div className="container py-4 px-5 mx-auto flex justify-between items-center sm:flex-row flex-col">
-            <p className="text-sm text-gray-500 ">© {new Date().getFullYear()}{" "} ImmoMarket by
-              <a href="https://hossam-dev14.github.io/" className="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">Hossam Dev</a>
+            <p className="text-sm text-gray-500 ">© {new Date().getFullYear()}{" "} Assignment 1 by
+              <a href="https://hossam-dev14.github.io/" className="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">DimSum</a>
             </p>
             <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
               <a className="ml-3 text-xl font-extrabold text-white p-2 bg-secondary shadow-lg rounded-lg">

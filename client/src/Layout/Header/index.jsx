@@ -13,10 +13,10 @@ export default function Header() {
             <Link to='/' className="flex h-14 title-font font-medium items-center md:justify-start justify-center text-gray-900">
               <div className='w-14 pr-2'>
                 <img className='rounded-md w-full' 
-                  src={logo} alt='immomarket' 
+                  src={logo} alt='Assignment 1' 
                 />
               </div>
-              <span className="text-secondary text-2xl hidden md:block">ImmoMarket</span>
+              <span className="text-secondary text-2xl hidden md:block">Assignment 1</span>
             </Link>
           <div />
 
