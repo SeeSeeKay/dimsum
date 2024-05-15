@@ -584,7 +584,7 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-"api@file:D:\\Development\\dimsum\\api":
+"api@file:C:\\Users\\dteh6\\Downloads\\ProgrammingProjects\\dimsum\\api":
   version "1.0.0"
   resolved "file:api"
   dependencies:
@@ -901,7 +901,7 @@ chokidar@^3.5.2, chokidar@^3.5.3:
   optionalDependencies:
     fsevents "~2.3.2"
 
-"client@file:D:\\Development\\dimsum\\client":
+"client@file:C:\\Users\\dteh6\\Downloads\\ProgrammingProjects\\dimsum\\client":
   version "0.0.0"
   resolved "file:client"
   dependencies:

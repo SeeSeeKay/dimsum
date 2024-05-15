@@ -4,8 +4,8 @@ import createError from "../helpers/createError.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
-const access_secret = process.env.ACCESS_SECRET;
-const refresh_secret = process.env.REFRESH_SECRET;
+const access_secret = "dimsum0abcdefghijkjlmnopqrstuvwxyz";
+const refresh_secret = "dimsum0abcdefghijkjlmnopqrstuvwxyz";
 
 // Check if user is authenticated or not
 export function isAuthenticated(req, res, next) {
