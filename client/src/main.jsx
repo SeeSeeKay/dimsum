@@ -1,19 +1,24 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import { ChakraProvider } from '@chakra-ui/react'
+import { createRoot } from 'react-dom/client';
+import App from './App.jsx';
+import './index.css';
+import store from './store';
+import { Provider } from 'react-redux';
+import AuthProvider from './AuthProvider';
 
-import App from './App'
-import './index.css'
 
-import { theme } from './Theme';
+// import { ApiProvider } from '@reduxjs/toolkit/query/react';
+// import { usersApi } from './store/user/apiSlice.js';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ChakraProvider>
-  </React.StrictMode>
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
+  <Provider store={store}>
+    {/* <ApiProvider api={usersApi}> */}
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+    {/* </ApiProvider> */}
+  </Provider>
 )
