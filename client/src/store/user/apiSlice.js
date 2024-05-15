@@ -4,8 +4,8 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { getStateFromStorage } from '../../utils/localStorage.js';
 
-const baseQuery = fetchBaseQuery({ 
-  baseUrl: 'https://immomarket.onrender.com/api',
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'http://localhost:8080/api',
   prepareHeaders: (headers) => {
     const accessToken = getStateFromStorage('userInfo')?.accessToken;
     if (accessToken) {
