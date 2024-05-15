@@ -29,7 +29,7 @@ export default function Profile() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'avatar') {
+    if (name === 'avatarBase64') {
       setFormData({
         ...formData,
         [name]: files[0]
@@ -83,12 +83,12 @@ export default function Profile() {
                         hidden 
                         ref={fileRef} 
                         accept='image/*'
-                        name='avatar'
+                        name='avatarBase64'
                         onChange={handleChange}
                       />
                       <img 
-                        src={!imageForDisplay ? (userInfo?.data?.avatar) : (imageForDisplay)} 
-                        alt="Avatar" 
+                        src={!imageForDisplay ? (userInfo?.data?.avatarBase64) : (imageForDisplay)} 
+                        alt="avatarBase64" 
                         onClick={() => fileRef.current.click()}
                         className=' w-1/3 mx-auto cursor-pointer rounded-full hover:shadow-lg shadow-md hover:border-2 border-gray-300'
                       />

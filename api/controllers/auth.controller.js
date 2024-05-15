@@ -31,7 +31,7 @@ export const signUp = async (req, res, next) => {
 
     // Create the new user
     const newUser = new User({ 
-      username, email, phone, password, avatar: profileImage
+      username, email, phone, password, avatarBase64: profileImage
     });
 
     await newUser.save();

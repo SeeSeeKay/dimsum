@@ -19,7 +19,7 @@ const PropertyCard = ({ propsCard }) => {
         
         <div className="flex items-center  bg-gray-200 rounded-md py-2 px-4 mt-4 ">
           <img
-            src={propsCard.ownerId.avatar}
+            src={propsCard.ownerId.avatarBase64}
             alt={propsCard.ownerId.username}
             className="w-10 h-10 rounded-full"
           />

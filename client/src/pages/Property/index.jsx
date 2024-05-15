@@ -20,9 +20,9 @@ export default function Property() {
   const formRef = useRef()
   
   // EmailJS To sendMail 
-  const serviceID = "service_q8tcpzy"
-  const templateID = "template_qubcj94"
-  const publicKey = "21vPKvxAk7DXkAJTf"
+  const serviceID = "service_41cm1tg"
+  const templateID = "template_a1jbeck"
+  const publicKey = "3oVeRi36B1VGdWtUZ"
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -180,7 +180,7 @@ export default function Property() {
               {/* Send Message to the Property's Owner */}
               <div className="sm:w-1/3 text-center sm:pl-4 sm:py-8 sm:border-l border-gray-200 mt-4 ">
                 <div className="w-18 h-18 rounded-full inline-flex items-center justify-center ">
-                  <img src={property?.ownerId?.avatar} alt="Property" className="object-cover object-center h-full w-full rounded-full " />
+                  <img src={property?.ownerId?.avatarBase64} alt="Property" className="object-cover object-center h-full w-full rounded-full " />
                 </div>
                 <div className="flex flex-col items-center text-center justify-center">
                   <h2 className="font-medium title-font mt-2 text-gray-900 text-lg">{property?.ownerId?.username}</h2>
@@ -256,7 +256,7 @@ export default function Property() {
                         placeholder="Message"
                         autoComplete='Message'
                         required
-                      >{`I am interested in your property '${property?.title}'`}</textArea>
+                      >{`I am interested in your property '${property?.title}'.`}</textArea>
                     </div>
                     {/* Submit */}
                     <div className="text-center mt-3">

@@ -36,7 +36,7 @@ export default function Header() {
                     Dashboard
                   </Link>
                   <Link to="/profile" className='w-10 '>
-                    <img src={userInfo?.data?.avatar} alt="profile" className='w-full rounded-full shadow-md'/>
+                    <img src={userInfo?.data?.avatarBase64} alt="profile" className='w-full rounded-full shadow-md'/>
                   </Link>
                 </div>
               </>

@@ -14,7 +14,7 @@ import uploadOptions from '../middleware/multer.middleware.js';
 const router = express.Router();
 
 // Uploding files
-const uploadImage = uploadOptions.single('avatar');
+const uploadImage = uploadOptions.single('avatarBase64');
 
 router.get('/', isAuthenticated, getUsers);
 router.

@@ -15,7 +15,7 @@ const userSchema = new Schema({
   password: { type: String, required: true, min: MIN_PASSWORD_LENGTH, max: MAX_PASSWORD_LENGTH },
   confirmPassword: { type: String, optional: true, min: MIN_PASSWORD_LENGTH, max: MAX_PASSWORD_LENGTH },
   refreshToken: { type: String, required: false }, // Store the refresh token
-  avatar: { type: String, required: false },
+  avatarBase64: { type: String, required: false },
 }, { timestamps: true });
 
 // Joi schema for user validation
@@ -40,7 +40,7 @@ userSchema.pre('save', async function (next) {
 
 
 
-// Adding virtual id for fronend frienly
+// Adding virtual id for frontend friendliness
 userSchema.virtual('id').get(function() {
   return this._id.toHexString();
 })
