@@ -18,11 +18,25 @@ const userSchema = new Schema({
   avatarBase64: { type: String, required: false },
 }, { timestamps: true });
 
-// Joi schema for user validation
-const userValidation = Joi.object({
+// Joi schema for user sign up validation
+const userSignUpValidation = Joi.object({
   username: Joi.string().required().min(MIN_NAME_LENGTH).max(MAX_NAME_LENGTH).alphanum(),
   email: Joi.string().required().email(),
   phone: Joi.number().optional().integer().positive(),
+  password: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH),
+  confirmPassword: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH)
+})
+
+// Joi schema for user update details
+const userUpdateDetailsValidation = Joi.object({
+  username: Joi.string().required().min(MIN_NAME_LENGTH).max(MAX_NAME_LENGTH).alphanum(),
+  email: Joi.string().required().email(),
+  phone: Joi.number().optional().integer().positive(),
+})
+
+// Joi schema for user change pw
+const userChangePasswordValidation = Joi.object({
+  username: Joi.string().required().min(MIN_NAME_LENGTH).max(MAX_NAME_LENGTH).alphanum(),
   password: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH),
   confirmPassword: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH)
 })
@@ -47,4 +61,6 @@ userSchema.virtual('id').get(function() {
 userSchema.set('toJSON', { virtuals: true });
 
 export default mongoose.model('User', userSchema);
-export { userValidation };
+export { userSignUpValidation };
+export { userUpdateDetailsValidation };
+export { userChangePasswordValidation };

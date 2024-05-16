@@ -192,22 +192,27 @@ export const updateProperty = async (req, res, next) => {
     }
 
     // Get the uploaded file if it exists
-    const file = req.file;
-    console.log(file)
-    // if (!file) return next(createError(400, 'No image in the request'));
+    let imageBase64 = null
+    if(req.file) {
+      const file = req.file;
+      console.log(file)
+      // if (!file) return next(createError(400, 'No image in the request'));
+      
+      const fileName = file.filename;
+      const basePath = `${req.protocol}://${req.get('host')}/images/`;
     
-    const fileName = file.filename;
-    const basePath = `${req.protocol}://${req.get('host')}/images/`;
+      // Read the file as binary data
+      const data = fs.readFileSync(file.path);
 
-    // Read the file as binary data
-    const data = fs.readFileSync(file.path);
-
-    // Convert binary data to base64
-    const imageBase64 = Buffer.from(data).toString('base64');
-
-    // Delete the temporary file after conversion
-    fs.unlinkSync(file.path);
-
+      // Convert binary data to base64
+      imageBase64 = "data:image/jpeg;base64,"+Buffer.from(data).toString('base64');
+   
+      // Delete the temporary file after conversion
+      fs.unlinkSync(file.path);
+    } 
+    else {
+      imageBase64 = req.imageBase64
+    }
     // Update the property
     property = await Property.findByIdAndUpdate(id, {
       title,
@@ -220,7 +225,7 @@ export const updateProperty = async (req, res, next) => {
       parking,
       bedrooms,
       bathrooms,
-      imageBase64: `data:image/jpeg;base64,${imageBase64}`,
+      imageBase64,
       ownerId
     }, { new: true });
 

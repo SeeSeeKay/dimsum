@@ -59,6 +59,7 @@ export default function Property() {
 
 
   console.log(property?.ownerId?.id);
+  console.log("HAHAHAHAHAHA"+property?.ownerId?.imageBase64);
   console.log(userInfo?.data?._id);
 
   return (
@@ -96,7 +97,7 @@ export default function Property() {
             </div>
             <div className="h-96 my-2">
               <img 
-                src={property.imageBase64} 
+                src={property.imageBase64}
                 alt="Property" 
                 className="object-cover object-center h-full w-full rounded-md shadow-md"
               />
@@ -131,7 +132,7 @@ export default function Property() {
                   <div className="flex flex-wrap justify-between gap-3">
                     <div className="flex flex-col mb-1">
                       <ul>
-                        <li className='flex gap-3'><p>Property ID: </p><span>{property.id.slice(0, 6)}...</span></li>
+                        <li className='flex gap-3'><p>Property ID: </p><span>{property.id.slice(0, 15)}...</span></li>
                         <li className='flex gap-3'><p>Type: </p> <span>{property.listingType}</span></li>
                         <li className='flex gap-3'><p>Category: </p><span>{property.category}</span></li>
                         <li className='flex gap-3'><p>Price: </p><span>{property.price}$</span></li>
@@ -180,7 +181,7 @@ export default function Property() {
               {/* Send Message to the Property's Owner */}
               <div className="sm:w-1/3 text-center sm:pl-4 sm:py-8 sm:border-l border-gray-200 mt-4 ">
                 <div className="w-18 h-18 rounded-full inline-flex items-center justify-center ">
-                  <img src={property?.ownerId?.avatarBase64} alt="Property" className="object-cover object-center h-full w-full rounded-full " />
+                  <img src={property?.ownerId?.avatarBase64} alt="Property Owner" className="object-cover object-center h-full w-full rounded-full " />
                 </div>
                 <div className="flex flex-col items-center text-center justify-center">
                   <h2 className="font-medium title-font mt-2 text-gray-900 text-lg">{property?.ownerId?.username}</h2>

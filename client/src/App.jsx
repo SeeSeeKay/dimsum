@@ -10,7 +10,7 @@ import SignIn from './pages/SignIn';
 import Profile from './pages/Profile';
 import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
-
+import ChangePassword from './pages/ChangePassword';
 import RoutePrivate from './pages/RoutePrivate';
 import Dashboard from './pages/Dashboard';
 import AddProperty from './pages/AddProperty';
@@ -84,6 +84,7 @@ export default function App() {
           <Route path="" element={<RoutePrivate />} >
             <Route path="/dashboard" element={<Dashboard />}/>
             <Route path="/profile" element={<Profile />}/>
+            <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/add-property" element={<AddProperty />}/>
             <Route path="/edit-property/:propertyId" element={<EditProperty />}/>
             <Route path="/my-listing" element={<PropertyList />}/>
@@ -93,11 +94,5 @@ export default function App() {
 
       <ToastContainer position="top-center" />
     </BrowserRouter>
-  
-  // <div>
-  //   <input type="file" onChange={(e) => setSelectedFile(e.target.files)} />
-  //   <button onClick={handleFileSelect}>Upload</button>
-  //   <button onClick={handleRetrieve}>Retrieve</button>
-  // </div>
   )
 }
