@@ -9,7 +9,7 @@ import { setUserInfo } from '../../store/user/authSlice';
 
 export default function ChangePassword() {
   const { userInfo } = useSelector((state) => state.auth);
-  const [formData, setFormData] = useState({ username: userInfo.data.username });
+  const [formData, setFormData] = useState(userInfo ? {username: userInfo.data.username, email: userInfo.data.email, phone: userInfo.data.phone} : {});
   const [passwordShown, setPasswordShown] = useState(false);
 
   const dispatch = useDispatch();

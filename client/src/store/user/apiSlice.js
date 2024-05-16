@@ -61,6 +61,14 @@ export const usersApi = createApi({
         body: data,
       }),
     }),
+
+    updatePassword: builder.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/profile`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
     
     onBeforeQuery: (arg, queryApi) => {
       const formData = new FormData();
@@ -84,5 +92,6 @@ export const {
   useRefreshTokenMutation, //Refresh Token
   useSignOutUserMutation,  //SignOut
   useUpdateUserMutation, //Updaete User
+  useUpdatePasswordMutation,
   useRetriveAllUsersMutation,//Retriver All Users
 } = usersApi;

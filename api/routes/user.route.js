@@ -5,6 +5,7 @@ import config from 'dotenv/config'
 import { 
   deleteUser, 
   updateUser,
+  updatePassword,
   getUsers,
   getUserDetails,
 } from '../controllers/user.controller.js';
@@ -20,7 +21,7 @@ router.get('/', isAuthenticated, getUsers);
 router.
   route('/profile').
   get(isAuthenticated, getUserDetails).
-  put(isAuthenticated, uploadImage, updateUser);
+  put(isAuthenticated, uploadImage, updateUser, updatePassword);
 
 router.delete('/:id', deleteUser);
 // router.post('/dashboard', verifyToken, dashdoard)

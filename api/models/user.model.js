@@ -16,6 +16,7 @@ const userSchema = new Schema({
   confirmPassword: { type: String, optional: true, min: MIN_PASSWORD_LENGTH, max: MAX_PASSWORD_LENGTH },
   refreshToken: { type: String, required: false }, // Store the refresh token
   avatarBase64: { type: String, required: false },
+  newPassword: { type: String, required: false },
 }, { timestamps: true });
 
 // Joi schema for user sign up validation
@@ -34,12 +35,11 @@ const userUpdateDetailsValidation = Joi.object({
   phone: Joi.number().optional().integer().positive(),
 })
 
-// Joi schema for user change pw
+// Joi schema for user change password validation
 const userChangePasswordValidation = Joi.object({
-  username: Joi.string().required().min(MIN_NAME_LENGTH).max(MAX_NAME_LENGTH).alphanum(),
   password: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH),
-  confirmPassword: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH)
-})
+  newPassword: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH),
+});
 
 
 // Hash the user's password before saving it

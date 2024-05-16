@@ -1,26 +1,27 @@
+import bcrypt from 'bcryptjs';
 import User, { userUpdateDetailsValidation } from '../models/user.model.js';
 import createError from '../helpers/createError.js';
 import fs from 'fs';
+import path from 'path';
 
-// Retrive all Users profile
-export const getUsers = async (req,res, next) => {
-  try{
+// Retrieve all Users profile
+export const getUsers = async (req, res, next) => {
+  try {
     const users = await User.find().select('-password');
-    if(!users) return next(createError(500, 'The users was not found!'));
-    res.status(200).json({ users })
+    if (!users) return next(createError(500, 'The users were not found!'));
+    res.status(200).json({ users });
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 // Get User Details
 export const getUserDetails = async (req, res, next) => {
-  try{
+  try {
     const user = await User.findById(req.user).select('-password');
-    if(!user) return next(createError(404, 'User not found!'));
+    if (!user) return next(createError(404, 'User not found!'));
 
-    res.status(200).json({ success: true, user })
-
+    res.status(200).json({ success: true, user });
   } catch (error) {
     next(createError(500, 'Server error!'));
   }
@@ -70,19 +71,46 @@ export const updateUser = async (req, res, next) => {
   }
 };
 
+// Update user password
+export const updatePassword = async (req, res, next) => {
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+    // Validate password change data using Joi schema
+    const { error } = userChangePasswordValidation.validate({ password: currentPassword, newPassword });
+    if (error) return next(createError(400, error.details[0].message));
+
+    const user = await User.findById(req.user);
+    if (!user) return next(createError(404, 'User not found!'));
+
+    // Check if current password matches
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) return next(createError(400, 'Current password is incorrect!'));
+
+    // Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ success: 'Password updated successfully.' });
+  } catch (error) {
+    next(createError(500, 'Server error!'));
+  }
+};
+
 
 // Delete user from the database
 export const deleteUser = async (req, res, next) => {
-  const user = req.user
-  if(!user) return next(createError('User not found!'));
+  const user = req.user;
+  if (!user) return next(createError('User not found!'));
 
-  try{
+  try {
     await User.findByIdAndDelete(user);
 
-    res.
-      status(200).
-      json('User deleted successfully!');
+    res.status(200).json('User deleted successfully!');
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
