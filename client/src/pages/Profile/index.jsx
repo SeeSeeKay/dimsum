@@ -90,7 +90,7 @@ export default function Profile() {
                         onChange={handleChangeImage}
                       />
                       <img 
-                        src={!imageForDisplay ? (avatar) : 
+                        src={!imageForDisplay ? (userInfo.data.avatar) : 
                         (imageForDisplay)} 
                         alt="Avatar" 
                         onClick={() => fileRef.current.click()}

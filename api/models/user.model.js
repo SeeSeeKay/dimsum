@@ -15,7 +15,7 @@ const userSchema = new Schema({
   password: { type: String, required: true, min: MIN_PASSWORD_LENGTH, max: MAX_PASSWORD_LENGTH },
   confirmPassword: { type: String, optional: true, min: MIN_PASSWORD_LENGTH, max: MAX_PASSWORD_LENGTH },
   refreshToken: { type: String, required: false }, // Store the refresh token
-  avatarUrl: { type: String, required: false },
+  avatar: { type: String, required: false },
   newPassword: { type: String, required: false },
   biography: { type: String, required: false}, // because by right Agent need to have biography, but optional for other roles
   role: {

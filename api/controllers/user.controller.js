@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import User, { userUpdateDetailsValidation } from '../models/user.model.js';
 import createError from '../helpers/createError.js';
+import cloudinary from 'cloudinary'
 import fs from 'fs';
 import path from 'path';
 
@@ -37,7 +38,7 @@ export const updateUser = async (req, res, next) => {
     const { error } = userUpdateDetailsValidation.validate({ username, email, phone });
     if (error) return next(createError(400, error.details[0].message));
 
-    let avatarUrl;
+    let avatar;
 
         // Check if file was uploaded
         if (file) {
@@ -45,13 +46,13 @@ export const updateUser = async (req, res, next) => {
           const result = await cloudinary.uploader.upload(file.path);
     
           // If file was uploaded, construct full avatar URL
-          avatarUrl= result.secure_url;
+          avatar= result.secure_url;
         }
     
         // find and Update user
         const updatedUser = await User.findByIdAndUpdate(
           req.user, 
-          {username, email, phone, avatar: avatarUrl }, 
+          {username, email, phone, avatar: avatar }, 
           { new: true }).select("-password");
     
         if (!updatedUser) {
