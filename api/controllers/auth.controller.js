@@ -9,11 +9,11 @@ const refresh_secret = "dimsum0abcdefghijkjlmnopqrstuvwxyz";
 
 // Sign up
 export const signUp = async (req, res, next) => {
-  const { username, email, phone, password, confirmPassword } = req.body;
+  const { username, email, phone, password, confirmPassword, role } = req.body;
   const file = req.file;
 
   // Throw a custom error if any required field is missing
-  if (!username || !email || !phone || !password || !confirmPassword) {
+  if ( !role || !username || !email || !phone || !password || !confirmPassword) {
     return next(createError(400, 'All fields are required!'));
   }
 
@@ -45,7 +45,7 @@ export const signUp = async (req, res, next) => {
 
     // Create the new user
     const newUser = new User({
-      username, email, phone, password, avatarBase64
+      username, email, phone, password, avatarBase64, role
     });
 
     await newUser.save();
