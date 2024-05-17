@@ -34,7 +34,7 @@ export default function Properties() {
             <strong className="text-secondary sm:text-4xl text-3xl font-medium title-font mb-2">
               Properties
             </strong>
-            <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Find your house dream!</p>
+            <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Search for a property!</p>
             {/* <Search /> */}
             <div className='w-4/5 max-w-[30rem] min-w-72 mt-8 mb-16'>
               <Search setSearchTerm={setSearchTerm} /> {/* Pass setSearchTerm to the Search component */}

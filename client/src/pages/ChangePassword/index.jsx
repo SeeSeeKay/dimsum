@@ -58,16 +58,16 @@ export default function ChangePassword() {
                     {/* Username */}
                     <div className="relative w-full mb-3">
                       <label className="block uppercase text-gray-700 text-xs font-bold mb-2">
-                        Username
+                        Email
                       </label>
                       <input
                         type="text"
                         className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder="Username"
+                        placeholder="Email"
                         style={{ transition: "all .15s ease" }}
-                        defaultValue={userInfo?.data?.username}
-                        id="username"
-                        name="username"
+                        defaultValue={userInfo?.data?.email}
+                        id="email"
+                        name="email"
                         readOnly
                       />
                     </div>

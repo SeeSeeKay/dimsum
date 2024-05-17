@@ -114,7 +114,6 @@ export default function Profile() {
                         name="username"
                         onChange={handleChange}
                         autoComplete='username'
-                        readOnly
                       />
                     </div>
                     {/* Email */}
@@ -132,6 +131,7 @@ export default function Profile() {
                         name="email"
                         onChange={handleChange}
                         autoComplete='email'
+                        readOnly
                       />
                     </div>
                     {/* Phone number */}
