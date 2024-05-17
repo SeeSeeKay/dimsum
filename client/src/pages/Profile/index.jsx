@@ -130,6 +130,7 @@ export default function Profile() {
                         name="email"
                         onChange={(e) => setEmail(e.target.value)}
                         autoComplete='email'
+                        readOnly
                       />
                     </div>
                     {/* Phone number */}
