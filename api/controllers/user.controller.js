@@ -37,7 +37,7 @@ export const updateUser = async (req, res, next) => {
     const { error } = userUpdateDetailsValidation.validate({ username, email, phone });
     if (error) return next(createError(400, error.details[0].message));
 
-    let avatarBase64;
+    let avatarUrl;
 
         // Check if file was uploaded
         if (file) {

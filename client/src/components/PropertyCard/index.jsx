@@ -9,7 +9,7 @@ const PropertyCard = ({ propsCard }) => {
     <div onClick={() => navigate(`../properties/${propsCard.id}`)}
       className="bg-slate-100 w-full sm:w-4/5 md:w-2/5 lg:w-1/3 shadow-md rounded-lg cursor-pointer hover:shadow-lg" 
     >
-      <img className="min-h-64 w-full rounded-md object-cover object-center shadow-lg" src={propsCard.imageBase64} alt="home"/>
+      <img className="min-h-64 w-full rounded-md object-cover object-center shadow-lg" src={propsCard.imageUrl} alt="home"/>
       <div className='p-4'>
         <h2 className="text-md text-gray-900 font-medium text-lg title-font mb-2">{propsCard.title}</h2>
         <div className='flex items-center justify-between'>
@@ -19,7 +19,7 @@ const PropertyCard = ({ propsCard }) => {
         
         <div className="flex items-center  bg-gray-200 rounded-md py-2 px-4 mt-4 ">
           <img
-            src={propsCard.ownerId.avatarBase64}
+            src={propsCard.ownerId.avatarUrl}
             alt={propsCard.ownerId.username}
             className="w-10 h-10 rounded-full"
           />
@@ -42,7 +42,7 @@ PropertyCard.propTypes = {
     description: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     listingType: PropTypes.string.isRequired,
-    imageBase64: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
     ownerId: PropTypes.object.isRequired,
   }).isRequired,
 };

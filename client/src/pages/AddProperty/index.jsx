@@ -23,12 +23,12 @@ export default function AddProperty() {
     bathrooms: 1,
     furnished: false,
     parking: false,
-    imageBase64: null,
+    imageUrl: null,
   });
 
   const handleChange = (e) => {
     const { name, checked, value, files } = e.target; // Changed 'file' to 'files' to correctly access the files property
-    if (name === 'imageBase64') {
+    if (name === 'imageUrl') {
       setFormData({
         ...formData,
         [name]: files[0] // Changed 'file' to 'files[0]' to correctly access the first file in the array
@@ -56,7 +56,7 @@ export default function AddProperty() {
   
       const propertyData = {
         ...formData,
-        imageBase64: formData.imageBase64,
+        imageUrl: formData.imageUrl,
         ownerId: userInfo.data._id
       };
   
@@ -155,7 +155,7 @@ export default function AddProperty() {
                           type="file"
                           ref={fileRef}
                           className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 "
-                          name="imageBase64"
+                          name="imageUrl"
                           onChange={handleChange}
                         />
                         <div className='w-full h-64 md:80 lg:h-96 rounded-md shadow-md bg-gray-100 flex justify-center items-center flex-col'>

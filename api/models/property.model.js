@@ -16,7 +16,7 @@ const PropertySchema = new mongoose.Schema({
   parking: { type: Boolean, required: true },
   bedrooms: { type: Number },
   bathrooms: { type: Number },
-  imageBase64: { type: String, required: false },
+  imageUrl: { type: String, required: false },
   ownerId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
   priceHistory: [priceChangeSchema], // Array of price change events
 }, { timestamps: true });
