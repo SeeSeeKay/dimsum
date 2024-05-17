@@ -39,37 +39,34 @@ export const updateUser = async (req, res, next) => {
 
     let avatarBase64;
 
-    // Check if file was uploaded
-    if (file) {
-      // Read the uploaded file and convert it to Base64
-      const filePath = path.join(__dirname, '..', 'uploads', file.filename);
-      const fileData = fs.readFileSync(filePath);
-      avatarBase64 = `data:${file.mimetype};base64,${fileData.toString('base64')}`;
-    } else {
-      // If no file was uploaded, use UI Avatars API with Base64 placeholder
-      const base64Avatar = Buffer.from(`https://ui-avatars.com/api/?background=random&rounded=true&name=${username}`).toString('base64');
-      avatarBase64 = `data:image/png;base64,${base64Avatar}`;
+        // Check if file was uploaded
+        if (file) {
+          // Upload image to Cloudinary
+          const result = await cloudinary.uploader.upload(file.path);
+    
+          // If file was uploaded, construct full avatar URL
+          avatarUrl= result.secure_url;
+        }
+    
+        // find and Update user
+        const updatedUser = await User.findByIdAndUpdate(
+          req.user, 
+          {username, email, phone, avatar: avatarUrl }, 
+          { new: true }).select("-password");
+    
+        if (!updatedUser) {
+          return next(createError(404, 'User not found'));
+        }
+        res.
+          status(200).json({ 
+            seccuss: 'User updated successfully.',
+            updatedUser
+          });
+    
+      } catch (error) {
+        next(error);
+      }
     }
-
-    // Find and update user
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user,
-      { username, email, phone, avatar: avatarBase64 },
-      { new: true }
-    ).select('-password');
-
-    if (!updatedUser) {
-      return next(createError(404, 'User not found'));
-    }
-
-    res.status(200).json({
-      success: 'User updated successfully.',
-      updatedUser
-    });
-  } catch (error) {
-    next(error);
-  }
-};
 
 // Update user password
 export const updatePassword = async (req, res, next) => {

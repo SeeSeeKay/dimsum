@@ -1,6 +1,6 @@
+import { v2 as cloudinary } from 'cloudinary';
 import Property from '../models/property.model.js';
 import createError from '../helpers/createError.js';
-import fs from 'fs';
 
 // Add property
 export const addProperty = async (req, res, next) => {
@@ -19,17 +19,8 @@ export const addProperty = async (req, res, next) => {
     const file = req.file;
     if (!file) return next(createError(400, 'No image in the request'));
     
-    // const fileName = file.filename;
-    // const basePath = `${req.protocol}://${req.get('host')}/images/`;
-
-    // Read the file as binary data
-    const data = fs.readFileSync(file.path);
-
-    // Convert binary data to base64
-    const imageBase64 = Buffer.from(data).toString('base64');
-
-    // Delete the temporary file after conversion
-    fs.unlinkSync(file.path);
+    // Upload image to Cloudinary
+    const result = await cloudinary.uploader.upload(file.path);
 
     // Ensure that ownerId is present in the request (assuming it's populated by middleware)
     const ownerId = req.user;
@@ -49,7 +40,7 @@ export const addProperty = async (req, res, next) => {
       parking,
       bedrooms,
       bathrooms,
-      imageBase64: `data:image/jpeg;base64,${imageBase64}`, // Assuming the image is JPEG
+      imageUrl: result.secure_url,
       ownerId
     });
   
@@ -165,14 +156,12 @@ export const getMyListing = async (req, res, next) => {
 // Update property by ID
 export const updateProperty = async (req, res, next) => {
   const { id } = req.params;
-  // console.log(id);
 
   const { title, description, address, price, listingType, 
-    category, bedrooms, bathrooms, furnished, parking
+    category, bedrooms, bathrooms, furnished, parking, imageUrl
   } = req.body;
 
   try {
-
     // Find the property by id
     let property = await Property.findById(id);
 
@@ -192,27 +181,17 @@ export const updateProperty = async (req, res, next) => {
     }
 
     // Get the uploaded file if it exists
-    let imageBase64 = null
-    if(req.file) {
-      const file = req.file;
-      console.log(file)
-      // if (!file) return next(createError(400, 'No image in the request'));
-      
-      const fileName = file.filename;
-      const basePath = `${req.protocol}://${req.get('host')}/images/`;
-    
-      // Read the file as binary data
-      const data = fs.readFileSync(file.path);
+    const file = req.file;
+    // if (!file) return next(createError(400, 'No image in the request'));
+    let newImageUrl;
 
-      // Convert binary data to base64
-      imageBase64 = "data:image/jpeg;base64,"+Buffer.from(data).toString('base64');
-   
-      // Delete the temporary file after conversion
-      fs.unlinkSync(file.path);
+    // Check if a file was uploaded
+    if (file) {
+      // Upload image to Cloudinary
+      const result = await cloudinary.uploader.upload(file.path);
+      newImageUrl = result.secure_url;
     } 
-    else {
-      imageBase64 = req.imageBase64
-    }
+
     // Update the property
     property = await Property.findByIdAndUpdate(id, {
       title,
@@ -225,8 +204,7 @@ export const updateProperty = async (req, res, next) => {
       parking,
       bedrooms,
       bathrooms,
-      imageBase64,
-      ownerId
+      imageUrl: newImageUrl,
     }, { new: true });
 
     if (!property) {

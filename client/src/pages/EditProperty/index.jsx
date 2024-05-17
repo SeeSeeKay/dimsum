@@ -23,7 +23,7 @@ export default function EditProperty() {
     bathrooms: 1,
     furnished: false,
     parking: false,
-    imageBase64: null,
+    imageUrl: null,
   });
   
   
@@ -39,13 +39,12 @@ export default function EditProperty() {
     getProperties();
   }, [params.propertyId])
 
-
   const handleChange = (e) => {
-    const { name, checked, value, files } = e.target; // Changed 'file' to 'files' to correctly access the files property
-    if (name === 'imageBase64') {
+    const { name, checked, value, files } = e.target;
+    if (name === 'imageUrl') {
       setFormData({
         ...formData,
-        [name]: files[0] // Changed 'file' to 'files[0]' to correctly access the first file in the array
+        [name]: files[0]
       });
       setImageForDisplay(URL.createObjectURL(files[0]));
     }
@@ -56,7 +55,7 @@ export default function EditProperty() {
       });
     }
   };
-
+  console.log(formData)
 
   const handleEditProperty = async (e) => {
     e.preventDefault();
@@ -67,14 +66,17 @@ export default function EditProperty() {
         toast.error("Please fill in all required fields");
         return;
       }
-  
+
       const propertyData = {
         ...formData,
-        imageBase64: formData.imageBase64,
+        // imageUrl: typeof imageUrl === 'object' ? formData.imageUrl : formData.imageUrl,
+        imageUrl: formData.imageUrl,        
         ownerId: userInfo.data._id
       };
-      
-      const res = await api.put(`/properties/${params.propertyId}`,
+      console.log(propertyData)
+      console.log(formData.imageUrl);
+
+      const res = await api.put(`/properties/update/${params.propertyId}`,
       propertyData, {
         headers: { 
           'Content-Type': 'multipart/form-data',
@@ -82,14 +84,13 @@ export default function EditProperty() {
         }
       });
 
-      toast.success(res?.data?.message);
+      toast.success(res.message);
       navigate('/my-listing');
     } catch(err) {
-      console.log(err.message);
+      console.error(err.message);
       toast.error(err.message);
     }
   }
-
 
   return  (
     <Layout>
@@ -169,7 +170,7 @@ export default function EditProperty() {
                           type="file"
                           ref={fileRef}
                           className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 "
-                          name="imageBase64"
+                          name="imageUrl"
                           onChange={handleChange}
                         />
                         <div className='w-full h-64 md:80 lg:h-96 rounded-md shadow-md bg-gray-100 flex justify-center items-center flex-col'>
@@ -180,7 +181,7 @@ export default function EditProperty() {
                                  hover:border-2 border-gray-300">
                               {!imageForDisplay ? (
                                 <img
-                                src={formData.imageBase64}
+                                src={formData.imageUrl}
                                 alt="Selected"
                                 onClick={()=> fileRef.current.click()}
                                 className="w-full h-full rounded-md"

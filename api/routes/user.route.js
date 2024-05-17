@@ -10,12 +10,12 @@ import {
   getUserDetails,
 } from '../controllers/user.controller.js';
 import {isAuthenticated} from '../middleware/auth.middleware.js';
-import uploadOptions from '../middleware/multer.middleware.js';
+import upload from '../middleware/multer.middleware.js';
 
 const router = express.Router();
 
 // Uploding files
-const uploadImage = uploadOptions.single('avatarBase64');
+const uploadImage = upload.single('avatar');
 
 router.get('/', isAuthenticated, getUsers);
 router.
@@ -23,7 +23,7 @@ router.
   get(isAuthenticated, getUserDetails).
   put(isAuthenticated, uploadImage, updateUser, updatePassword);
 
-router.delete('/:id', deleteUser);
+router.delete('/delete/:id', deleteUser);
 // router.post('/dashboard', verifyToken, dashdoard)
 
 export default router;
