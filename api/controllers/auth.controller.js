@@ -25,27 +25,18 @@ export const signUp = async (req, res, next) => {
     const { error } = userSignUpValidation.validate(req.body);
     if (error) return next(createError(400, error.details[0].message));
 
-    let avatarUrl;
+    let avatar;
 
-    // Check if file was uploaded
-    if (file) {
-      // Read the uploaded file and convert it to Base64
-      const filePath = path.join(__dirname, '..', 'uploads', file.filename);
-      const fileData = fs.readFileSync(filePath);
-      avatarUrl = `data:${file.mimetype};base64,${fileData.toString('base64')}`;
-    } else {
-      // Generate profile image URL using UI Avatars API and convert to Base64
-      const base64Avatar = Buffer.from(`https://ui-avatars.com/api/?background=random&rounded=true&name=${username}`).toString('base64');
-      avatarUrl = `data:image/png;base64,${base64Avatar}`;
-    }
+    // Generate profile image URL using UI Avatars API
+    avatar = `https://ui-avatars.com/api/?background=random&rounded=true&name=${username}`;
 
-    // Check if username or user email exists in the database
-    const userExist = await User.findOne({ email });
-    if (userExist) return next(createError(409, 'This user already exists!'));
+    // check if username or user email exists in the database
+    const userExist = await User.findOne({ email })
+    if(userExist) return next(createError(409, 'This user already exist!'));
 
     // Create the new user
     const newUser = new User({
-      username, email, phone, password, avatarUrl, role
+      username, email, phone, password, avatar, role
     });
 
     await newUser.save();

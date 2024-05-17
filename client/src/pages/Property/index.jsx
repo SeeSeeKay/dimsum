@@ -163,14 +163,14 @@ export default function Property() {
                   </div>
                 </div>
 
-                {/* Send Message to the Property's Owner */}
-                <div className="sm:w-1/3 text-center sm:pl-4 sm:py-8 sm:border-l border-gray-200 mt-4 ">
-                  <div className="w-18 h-18 rounded-full inline-flex items-center justify-center ">
-                    <img src={property?.ownerId?.avatarUrl} alt="Property Owner" className="object-cover object-center h-full w-full rounded-full " />
-                  </div>
-                  <div className="flex flex-col items-center text-center justify-center">
-                    <h2 className="font-medium title-font mt-2 text-gray-900 text-lg">{property?.ownerId?.username}</h2>
-                    <div className="w-12 h-1 bg-secondary rounded mt-1 mb-4"></div>
+              {/* Send Message to the Property's Owner */}
+              <div className="sm:w-1/3 text-center sm:pl-4 sm:py-8 sm:border-l border-gray-200 mt-4 ">
+                <div className="w-18 h-18 rounded-full inline-flex items-center justify-center ">
+                  <img src={property?.ownerId?.avatar} alt="Property Owner" className="object-cover object-center h-full w-full rounded-full " />
+                </div>
+                <div className="flex flex-col items-center text-center justify-center">
+                  <h2 className="font-medium title-font mt-2 text-gray-900 text-lg">{property?.ownerId?.username}</h2>
+                  <div className="w-12 h-1 bg-secondary rounded mt-1 mb-4"></div>
 
                     <form className='min-w-[85%]' ref={formRef} onSubmit={sendEmail}>
                       {/* To Email*/}
