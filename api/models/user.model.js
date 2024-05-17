@@ -22,7 +22,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     enum: ["Real Estate Agent", "Seller", "Buyer", "Admin"],
-    default: "Buyer" //For now set Buyer as default for testing purpose 
+    //default: "Buyer" //For now set Buyer as default for testing purpose 
     // TODO: add UI to select role.
   }
 }, { timestamps: true });
@@ -33,7 +33,8 @@ const userSignUpValidation = Joi.object({
   email: Joi.string().required().email(),
   phone: Joi.number().optional().integer().positive(),
   password: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH),
-  confirmPassword: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH)
+  confirmPassword: Joi.string().required().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH),
+  role: Joi.string().required()
 })
 
 // Joi schema for user update details
