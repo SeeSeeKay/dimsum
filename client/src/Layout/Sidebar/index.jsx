@@ -22,7 +22,7 @@ const menuItems = {
   // Manage Listing
   manageListing: [
     { name: "My Properties", icon: <SlHome/>, link: "/my-listing" },
-    { name: "My Favorites", icon: <SlHeart/>, link: "/dashboard" },
+    { name: "My Favorites", icon: <SlHeart/>, link: "/fav-listing" },
     { name: "Reviews", icon: <SlBubble/>, link: "/dashboard" }
   ],
   // manageAccount: [

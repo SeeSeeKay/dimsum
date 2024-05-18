@@ -18,6 +18,7 @@ import EditProperty from './pages/EditProperty';
 import Property from './pages/Property';
 import PropertyList from './pages/PropertyList';
 import Properties from './pages/Properties';
+import FavDashboard from "./pages/FavDashboard";
 
 
 // From routes/index
@@ -88,6 +89,7 @@ export default function App() {
             <Route path="/add-property" element={<AddProperty />}/>
             <Route path="/edit-property/:propertyId" element={<EditProperty />}/>
             <Route path="/my-listing" element={<PropertyList />}/>
+            <Route path="/fav-listing" element={<FavDashboard />} /> 
           </Route>
           <Route path="*" element={<ErrorPage/>} />
       </Routes>
