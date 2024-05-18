@@ -112,31 +112,32 @@ export const updateNote = async (req, res, next) => {
 };
 
 // Delete property by ID
-export const deleteProperty = async (req, res, next) => {
+export const deleteNote = async (req, res, next) => {
 
   try {
     // Find the property by ID
-    const property = await Property.findById(req.params.id);
+    const note = await Note.findById(req.params.id);
 
     // Check if the property exists
-    if (!property) {
-      return res.status(404).json({ error: 'Property not found!' });
+    if (!note) {
+      return res.status(404).json({ error: 'Note not found!' });
     }
 
-    console.log(req.user !== property.ownerId.toString());
+    // TODO: Commented out for testing purpose, to be enabled next time.
+    // console.log(req.user !== property.ownerId.toString());
 
-    // Check if the user is authorized to delete the property
-    if (req.user !== property.ownerId.toString()) {
-      return res.status(401).json({ error: 'You can only delete your own properties!' });
-    }
+    // // Check if the user is authorized to delete the property
+    // if (req.user !== property.ownerId.toString()) {
+    //   return res.status(401).json({ error: 'You can only delete your own properties!' });
+    // }
 
     // Delete the property
-    await Property.findByIdAndDelete(req.params.id);
+    await Note.findByIdAndDelete(req.params.id);
 
     // Respond with success message
-    res.status(200).json({ message: 'Property has been deleted!' });
+    res.status(200).json({ message: 'Note has been deleted!' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to delete property' });
+    res.status(500).json({ error: 'Failed to delete note' });
   }
 };

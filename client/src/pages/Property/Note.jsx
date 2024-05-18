@@ -8,27 +8,32 @@ const NotesApp = (props) => {
   const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(null);
   const {userInfo, isLoading } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    const getAllNotes = async() => {
-      console.log("GetAllNotes method executed.");
-      try{
-        const res = await api.get(`/properties/notes/${props.propertyId}` 
-        // {
-        //   params: { propertyId: props.propertyId }
-        // }
-      );
-        setNotes(res.data);
-      } catch (error){
-        console.log(error);
-      }
+  const getAllNotes = async() => {
+    console.log("GetAllNotes method executed.");
+    try{
+      const res = await api.get(`/properties/notes/${props.propertyId}` 
+    );
+      setNotes(res.data);
+    } catch (error){
+      console.log(error);
     }
+  }
+
+  useEffect(() => {
     getAllNotes();
   }, [props.propertyId]);
 
   const handleChange = (e) => {
+    if(isEditing){
+      setIsAdding(false);
+    }
+    else{
+      setIsAdding(true);
+    }
     setNote(e.target.value);
   };
 
@@ -58,9 +63,14 @@ const NotesApp = (props) => {
           const res = await api.put(`properties/notes/${notes[currentIndex]._id}`, updatedNote);
           // setNotes(updatedNotes);
           setIsEditing(false);
+          setIsAdding(false);
           setCurrentIndex(null);
         } else {
-          setNotes([...notes, note]);
+          const newNote = {
+            propertyId: props.propertyId,
+            description: note
+          }
+          setNotes([...notes, newNote]);
           const res = await api.post('properties/notes/add',
             noteData 
             //TODO: For now comment out to bypass this headers
@@ -70,7 +80,10 @@ const NotesApp = (props) => {
             //     Authorization: `Bearer ${userInfo.accessToken}`
             //   }
             // }
-          );  
+          );
+          setIsAdding(false);
+          setIsEditing(false);
+          getAllNotes();
         }
       }
     } catch(err){
@@ -86,14 +99,23 @@ const NotesApp = (props) => {
     setCurrentIndex(index);
     setNote(notes[index]);
     setIsEditing(true);
+    setIsAdding(false);
   };
 
-  const handleDelete = (index) => {
-    const updatedNotes = notes.filter((_, i) => i !== index);
-    setNotes(updatedNotes);
-    if (isEditing && currentIndex === index) {
-      setIsEditing(false);
-      setNote('');
+  const handleDelete = async (index) => {
+    try{
+      const res = await api.delete(`properties/notes/delete/${notes[index]._id}`);
+      if(res.status === 200){
+        const updatedNotes = notes.filter((_, i) => i !== index);
+        setNotes(updatedNotes);
+        if(isEditing && currentIndex ===  index){
+          setIsEditing(false);
+          setNote('');
+        }
+      }
+    } catch(error){
+      toast.error(error.message);
+      console.log(error.message);
     }
   };
 
@@ -106,7 +128,7 @@ const NotesApp = (props) => {
           </label>
           <textarea
             id="note"
-            value={note.description}
+            value={(isEditing && !isAdding) || (isAdding && !isEditing) ? note.description : ""}
             onChange={handleChange}
             placeholder="Enter your note"
             className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
