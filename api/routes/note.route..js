@@ -3,7 +3,9 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import config from 'dotenv/config'
 import { 
-  addNote
+  addNote,
+  getNotes,
+  updateNote
 } from '../controllers/note.controller.js';
 import {isAuthenticated} from '../middleware/auth.middleware.js';
 import upload from '../middleware/multer.middleware.js';
@@ -14,7 +16,9 @@ const router = express.Router();
 // const uploadImage = upload.single('avatar');
 
 // router.get('/', isAuthenticated, getUsers);
-router.post('/add', addNote)
+router.get('/:propertyId', getNotes);
+router.post('/add', addNote);
+router.put('/:id', updateNote);
 // router.
 //   route('/profile').
 //   get(isAuthenticated, getUserDetails).

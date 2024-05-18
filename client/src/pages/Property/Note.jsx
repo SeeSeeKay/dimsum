@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { current } from '@reduxjs/toolkit';
 
 const NotesApp = (props) => {
   const [note, setNote] = useState('');
@@ -9,6 +10,23 @@ const NotesApp = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(null);
   const {userInfo, isLoading } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const getAllNotes = async() => {
+      console.log("GetAllNotes method executed.");
+      try{
+        const res = await api.get(`/properties/notes/${props.propertyId}` 
+        // {
+        //   params: { propertyId: props.propertyId }
+        // }
+      );
+        setNotes(res.data);
+      } catch (error){
+        console.log(error);
+      }
+    }
+    getAllNotes();
+  }, [props.propertyId]);
 
   const handleChange = (e) => {
     setNote(e.target.value);
@@ -28,10 +46,17 @@ const NotesApp = (props) => {
     try{
       if (note.trim()) {
         if (isEditing) {
-          const updatedNotes = notes.map((n, index) =>
-            index === currentIndex ? note : n
-          );
-          setNotes(updatedNotes);
+          // const updatedNotes = notes.map((n, index) => 
+          //   index === currentIndex ? note : n
+          // );
+
+          let updatedNote = notes[currentIndex];
+          updatedNote.description = note;
+
+          console.log("updatedNote description : "+updatedNote.description);
+
+          const res = await api.put(`properties/notes/${notes[currentIndex]._id}`, updatedNote);
+          // setNotes(updatedNotes);
           setIsEditing(false);
           setCurrentIndex(null);
         } else {
@@ -81,7 +106,7 @@ const NotesApp = (props) => {
           </label>
           <textarea
             id="note"
-            value={note}
+            value={note.description}
             onChange={handleChange}
             placeholder="Enter your note"
             className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
@@ -110,7 +135,7 @@ const NotesApp = (props) => {
           {notes.map((note, index) => (
             <tr key={index}>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                {note}
+                {note.description}
               </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                 <button
