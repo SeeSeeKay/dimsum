@@ -11,6 +11,7 @@ import authRoute from './routes/auth.route.js';
 import userRoute from './routes/user.route.js';
 import propertyRoute from './routes/property.route.js';
 import noteRoute from './routes/note.route..js';
+import buyerPropertySavedRoute from './routes/buyerPropertySaved.route.js';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -48,6 +49,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);
 app.use('/api/properties', propertyRoute);
 app.use('/api/properties/notes', noteRoute);
+app.use('/api/properties/save', buyerPropertySavedRoute);
 
 
 // Error middleware (must be placed at the end)

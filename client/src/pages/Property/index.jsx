@@ -12,6 +12,7 @@ import api from '../../utils/api';
 // EmailJS To sendMail 
 import emailjs from '@emailjs/browser';
 import NotesApp from './Note';
+import LikeButton from '../../components/LikeButton';
 
 export default function Property() {
   const {userInfo} = useSelector((state) => state.auth);
@@ -91,7 +92,8 @@ export default function Property() {
                 </div>
                 ) : (
                   <div className="absolute top-0 right-0 flex gap-3">
-                    <SlHeart className='text-3xl font-bold cursor-pointer w-10 h-10 py-2 bg-gray-200 shadow-sm rounded-md hover:shadow-md hover:text-secondary'/>
+                    {/* <SlHeart className='text-3xl font-bold cursor-pointer w-10 h-10 py-2 bg-gray-200 shadow-sm rounded-md hover:shadow-md hover:text-secondary'/> */}
+                    <LikeButton userId={property?.ownerId?.id} propertyId={params.propertyId}/>
                     <SlShare className='text-3xl font-bold cursor-pointer w-10 h-10 py-2 bg-gray-200 shadow-sm rounded-md hover:shadow-md hover:text-secondary'/>
                   </div>
                 )}

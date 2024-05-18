@@ -1,0 +1,18 @@
+.heart-button {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+    color: transparent;
+    text-shadow: 0 0 0 red;
+  }
+  
+  .heart-button.saved {
+    color: red;
+    text-shadow: none;
+  }
+  
+  .heart-button:hover {
+    transform: scale(1.2);
+  }
