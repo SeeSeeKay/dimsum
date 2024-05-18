@@ -190,6 +190,15 @@ export default function Property() {
                     <ThreeDTour />
                   </article>
                 </div>
+                
+                <div className='p-4 bg-slate-50 rounded-md shadow-md mb-7'>
+                  <h2 className="title-font font-medium text-lg text-gray-900 mb-7">
+                    Notes
+                  </h2>
+                  <article className="md:h-72 w-full h-56">
+                    <NotesApp propertyId={params.propertyId}/>
+                  </article>
+                </div>
               </div>
 
               {/* Send Message to the Property's Owner */}
