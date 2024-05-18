@@ -20,30 +20,41 @@ export default function Property() {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const formRef = useRef()
-  
-  // EmailJS To sendMail 
+
+  // EmailJS To sendMail
   const serviceID = "service_41cm1tg"
   const templateID = "template_a1jbeck"
   const publicKey = "3oVeRi36B1VGdWtUZ"
+  const messageRef = useRef();
 
   const sendEmail = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    emailjs.sendForm(
-      serviceID,
-      templateID,
-      formRef.current,{ publicKey: publicKey })
-      .then(
-        () => {
-          toast.success("Email sent successfully!");
-          console.log('Success!');
-        },
-        (error) => {
-          toast.error("Failed to send email. Please try again.");
-          console.log('Failed...', error.text);
-        },
-      );
-  };
+  const message = messageRef.current.value.trim();
+  const placeholderText = `I am interested in your property '${property?.title}'.`;
+
+  if (message === '') {
+    messageRef.current.value = placeholderText;
+    return;
+  }
+
+  emailjs.sendForm(
+    serviceID,
+    templateID,
+    formRef.current,
+    { publicKey: publicKey, message: message }
+  )
+  .then(
+    () => {
+      toast.success("Email sent successfully!");
+      console.log('Success!');
+    },
+    (error) => {
+      toast.error("Failed to send email. Please try again.");
+      console.log('Failed...', error.text);
+    },
+  );
+};
 
   useEffect(() => {
     const getProperty = async () => {
@@ -72,7 +83,7 @@ export default function Property() {
           <div className='h-3/4 w-screen text-center'>
             <BeatLoader
               color="#064862"
-              size={30} 
+              size={30}
               aria-label="Loading..."
               data-testid="loader"
             />
@@ -85,7 +96,7 @@ export default function Property() {
               {( userInfo?.data?._id == property?.ownerId?.id) ? (
                 <div className="absolute top-0 right-0 flex gap-3">
                   <SlShare className='text-3xl font-bold cursor-pointer w-10 h-10 py-2 bg-gray-200 shadow-sm rounded-md hover:shadow-md hover:text-secondary'/>
-                  <Link 
+                  <Link
                     className="text-white bg-green-600 py-2 px-5 hover:bg-gray-500 rounded text-2xl"
                     to={`/edit-property/${property.id}`}
                   ><SlNote /></Link>
@@ -99,9 +110,9 @@ export default function Property() {
                 )}
             </div>
             <div className="h-96 my-2">
-              <img 
+              <img
                 src={property.imageUrl}
-                alt="Property" 
+                alt="Property"
                 className="object-cover object-center h-full w-full rounded-md shadow-md"
               />
             </div>
@@ -152,7 +163,7 @@ export default function Property() {
                   </div>
                   </div>
                 </div>
-                              
+
                 {/* Location */}
                 <div className='p-4 bg-slate-50 rounded-md shadow-md mb-7'>
                   <div className="flex justify-between w-full mb-7">
@@ -166,7 +177,7 @@ export default function Property() {
                       </div>
                   </div>
                   <article className="md:h-72 w-full h-56">
-                    <Map /> 
+                    <Map />
                   </article>
                 </div>
 
@@ -179,106 +190,102 @@ export default function Property() {
                     <ThreeDTour />
                   </article>
                 </div>
-
-                <div className='p-4 bg-slate-50 rounded-md shadow-md mb-7'>
-                  <h2 className="title-font font-medium text-lg text-gray-900 mb-7">
-                    Notes
-                  </h2>
-                  <article className="md:h-72 w-full h-56">
-                    <NotesApp propertyId={params.propertyId}/>
-                  </article>
-                </div>
               </div>
 
               {/* Send Message to the Property's Owner */}
               <div className="sm:w-1/3 text-center sm:pl-4 sm:py-8 sm:border-l border-gray-200 mt-4 ">
                 <div className="w-18 h-18 rounded-full inline-flex items-center justify-center ">
-                  <img src={property?.ownerId?.avatar} alt="Property Owner" className="object-cover object-center h-full w-full rounded-full " />
+                  <img src={property?.ownerId?.avatarUrl} alt="Property Owner" className="object-cover object-center h-full w-full rounded-full " />
                 </div>
                 <div className="flex flex-col items-center text-center justify-center">
                   <h2 className="font-medium title-font mt-2 text-gray-900 text-lg">{property?.ownerId?.username}</h2>
                   <div className="w-12 h-1 bg-secondary rounded mt-1 mb-4"></div>
 
                   <form className='min-w-[85%]' ref={formRef} onSubmit={sendEmail}>
+                    {/* To Email*/}
+                    <div className="relative w-full mb-3">
+                      <input
+                          type="email"
+                          name="receiver_email"
+                          defaultValue={property?.ownerId?.email}
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-200 rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          placeholder="To email"
+                          autoComplete="email"
+                          required
+                          readOnly
+                          style={{backgroundColor: '#e5e7eb', cursor: 'not-allowed'}}
+                      />
+                    </div>
+
+
                     {/* from name */}
                     <div className="relative w-full mb-3">
-                      <input 
-                        type="text"
-                        name='sender_name'
-                        defaultValue={userInfo?.data?.username}
-                        className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder='From name'
-                        autoComplete='username'
-                        required
+                      <input
+                          type="text"
+                          name='sender_name'
+                          defaultValue={userInfo?.data?.username}
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          placeholder='My name is...'
+                          autoComplete='username'
+                          required
                       />
                     </div>
                     {/* to name */}
                     <div className="relative w-full mb-3">
-                      <input 
-                        type="text"
-                        name='receiver_name'
-                        hidden
-                        defaultValue={property?.ownerId?.username}
-                        className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder='To name'
-                        autoComplete='username'
-                        required
+                      <input
+                          type="text"
+                          name='receiver_name'
+                          hidden
+                          defaultValue={property?.ownerId?.username}
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          placeholder='To name'
+                          autoComplete='username'
+                          required
                       />
                     </div>
                     {/* From Email*/}
                     <div className="relative w-full mb-3">
-                      <input 
-                        type="email"
-                        name='sender_email'
-                        defaultValue={userInfo?.data?.email}
-                        className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder='From email'
-                        autoComplete='email'
-                        required
+                      <input
+                          type="email"
+                          name='sender_email'
+                          defaultValue={userInfo?.data?.email}
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          placeholder='My Email is...'
+                          autoComplete='email'
+                          required
                       />
                     </div>
-                    {/* To Email*/}
-                    <div className="relative w-full mb-3">
-                      <input 
-                      type="email"
-                      name='receiver_email'
-                      defaultValue={property?.ownerId?.email}
-                      className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
-                      placeholder='To email'
-                      autoComplete='email'
-                      required
-                      />
-                    </div>
+
                     {/* Phone */}
                     <div className="relative w-full mb-3">
                       <input
-                        type="number"
-                        name="phone"
-                        defaultValue={userInfo?.data?.phone}
-                        className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder="Phone"
-                        autoComplete='phone'
-                        required
+                          type="tel"
+                          name="phone"
+                          defaultValue={userInfo?.data?.phone}
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          placeholder="My number is..."
+                          autoComplete='phone'
+                          required
                       />
                     </div>
                     {/* Message */}
                     <div className="relative w-full mb-3">
-                      <textArea 
-                        name="message"
-                        className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full h-32"
-                        placeholder="Message"
-                        autoComplete='Message'
-                        required
-                      >{`I am interested in your property '${property?.title}'.`}</textArea>
+                      <textArea
+                          name="message"
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full h-32"
+                          placeholder={`I am interested in your property '${property?.title}'.`}
+                          autoComplete='Message'
+                          ref={messageRef}
+                      ></textArea>
                     </div>
                     {/* Submit */}
                     <div className="text-center mt-3">
-                      <button 
-                        type="submit"
-                        disabled={loading}
-                        className="bg-secondary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                      <button
+                          type="submit"
+                          disabled={loading}
+                          className="bg-secondary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                       >
-                        { loading ? 'Sending...' : 'Send Message'}
+                        {loading ? 'Sending...' : 'Send Message'}
                       </button>
                     </div>
                   </form>
@@ -287,9 +294,9 @@ export default function Property() {
             </div>
           </div>
         ) : (
-          <p className='text-2xl text-center text-gray-400 font-bold'>
-            Property not found
-          </p>
+            <p className='text-2xl text-center text-gray-400 font-bold'>
+              Property not found
+            </p>
         )}
 
         </div>
