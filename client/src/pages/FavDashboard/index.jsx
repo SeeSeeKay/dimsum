@@ -13,14 +13,20 @@ const FavDashboard = () => {
   useEffect(() => {
     const getSavedProperties = async () => {
       try {
+        console.log("FavDashboard userId : "+userInfo.data._id);
         const savedres = await api.get(`properties/save/${userInfo.data._id}`);
-        console.log(savedres.data);
+        console.log("FavDashboard savedProperties : "+savedres.data);
         setSavedProperties(savedres.data);
-        savedProperties.map( async (p) => {
-          const res = await api.get(`properties/${p._id}`);
-          console.log(res.data);
-          setProperties(...properties, res.data);
-        });
+        const propertiesData = await Promise.all(
+          savedres.data.map(async (p) => {
+            console.log("FavDashboard propertyId : "+p.propertyId);
+            const res = await api.get(`/properties/${p.propertyId}`);
+            console.log("FavDashboard Properties : "+res.data);
+            return res.data;
+          })
+        )
+        console.log("FavDashBoard propertiesData : "+propertiesData);
+        setProperties(propertiesData);
         console.log("Retrieved savedProperties successfully.");
       }catch(error){
         toast.error(error.message);
@@ -29,6 +35,10 @@ const FavDashboard = () => {
     }
     getSavedProperties();
   }, [userInfo.data._id]);
+
+  useEffect(() => {
+    console.log("FavDashBoard properties : "+properties);
+  }, [properties]);
 
   return (
     <Layout>
@@ -40,12 +50,12 @@ const FavDashboard = () => {
           </strong>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Welcome to your favourtite dashboard!</p>
         </div>
-          { savedProperties.length === 0 ? 
+          { savedProperties.length === 0 || properties === null? 
             <div className='w-full h-32 m-auto '>
               <p className='text-3xl text-gray-400 font-samibold mb-7'>No favourite properties</p>
             </div> :        
             properties.map((p, index) => {
-              <PropertyCard propsCard={p} key={index} />
+              return <PropertyCard propsCard={p} key={index} />
             })
           }
         </div>
