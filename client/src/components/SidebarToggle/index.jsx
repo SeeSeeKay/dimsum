@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'; // Import PropTypes
 function SidebarToggle({showSidebar, toggleSidebar}) {
 
   return (
-    <div className='lg:hidden fixed top-4 left-4 z-20'>       
+    <div className=' fixed top-4 left-4'>       
       {/* Toggle Button */}
       <button className="bg-white p-3 rounded-lg shadow text-left"
         onClick={toggleSidebar}>

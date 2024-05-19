@@ -68,16 +68,17 @@ const Sidebar = () => {
         className={`w-64 bg-slate-100 shadow-lg fixed left-0 top-0 h-full ease-in duration-300 z-50 overflow-y-auto
           ${showSidebar ? 'translate-x-0' : '-translate-x-64'} lg:translate-x-0`}>
         {/* Logo */}
-        <Link to='/' className="flex p-3 title-font h-26 font-medium items-center flex-col justify-center text-gray-900 border-b border-gray-200 mb-7">
+        {/* <Link to='/' className="flex p-3 title-font h-26 font-medium items-center flex-col justify-center text-gray-900 border-b border-gray-200 mb-7">
           <div className='w-14 pr-2'>
             <img className='rounded-md w-full h-8' 
               src={logo} alt='Logo' 
             />
           </div>
           <span className="text-secondary text-2xl md:block">Assignment 1</span>
-        </Link>
+        </Link> */}
 
         {/* Main */}
+        <div className='p-10'></div>
         <div>
           <span className='text-gray-600 text-sm p-4 py-2'>Main</span>
           <nav className="mt-2">

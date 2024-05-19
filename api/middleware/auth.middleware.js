@@ -9,13 +9,16 @@ const refresh_secret = "dimsum0abcdefghijkjlmnopqrstuvwxyz";
 
 // Check if user is authenticated or not
 export function isAuthenticated(req, res, next) {
+
+
   const authorizationHeader = req.headers.authorization;
-  
+  // console.log(authorizationHeader)
   if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
     return next(createError(401, 'No token provided'));
   }
 
   const token = authorizationHeader.split(' ')[1];
+  console.log(token)
   try {
     const decoded = jwt.verify(token, access_secret);
     req.user = decoded.userId;
