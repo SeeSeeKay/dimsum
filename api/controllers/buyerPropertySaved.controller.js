@@ -64,6 +64,26 @@ export const getAllSavedProperties = async (req, res, next) => {
   }
 };
 
+// Retrieve a single property using its ID.
+export const getSavedProperty = async (req, res, next) => {
+  console.log("getSavedProperty method executed.");
+  // const propID =  mongoose.Types.ObjectId(req.params.propertyId);
+  const userID = req.params.userId;
+  const propertyID = req.params.propertyId;
+
+  try{
+    // const note = await Note.findById(propID).populate('ownerId', '-password -refreshToken');
+    const properties = await BuyerPropertySaved.find({ userId : userID, propertyId: propertyID});
+    if (properties.length === 0) {
+      console.log("User "+userID+" does not save property "+propertyId);
+      return;
+    } 
+    res.status(200).json(properties);
+  } catch(error){
+    next(error);
+  }
+};
+
 // Delete property by ID
 export const removeSavedProperty = async (req, res, next) => {
 
