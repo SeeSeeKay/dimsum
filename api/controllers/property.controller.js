@@ -5,7 +5,7 @@ import createError from '../helpers/createError.js';
 // Add property
 export const addProperty = async (req, res, next) => {
   const { title, description, address, price, listingType, 
-    category, bedrooms, bathrooms, furnished, parking
+    category, bedrooms, bathrooms, furnished, parking, views
   } = req.body;
 
   try {
@@ -41,7 +41,8 @@ export const addProperty = async (req, res, next) => {
       bedrooms,
       bathrooms,
       imageUrl: result.secure_url,
-      ownerId
+      ownerId,
+      views
     });
   
     res.status(201).json({ 
