@@ -25,6 +25,12 @@ const MortgageCalculator = () => {
     setMonthlyPayment(payment.toFixed(2));
   };
 
+  const reset = (event) => {
+    setLoanAmount('');
+    setInterestRate('');
+    setLoanTerm('');
+  }
+
   return (
     <div className="calculator-container">
       <h2>Mortgage Calculator</h2>
@@ -65,6 +71,9 @@ const MortgageCalculator = () => {
         </div>
         <div className="form-group">
           <button type="submit">Calculate</button>
+        </div>
+        <div className="form-group">
+        <button className="resetBtn" onClick={reset}>Reset</button>
         </div>
       </form>
       {monthlyPayment !== null && (
