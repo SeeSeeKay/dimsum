@@ -10,11 +10,30 @@ export default function Home() {
   const [properties, setProperties] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [otherTerm, setOtherTerm] = useState({
+    minPrice: '',
+    maxPrice: '',
+    bedroomNumber: '',
+    listingType: '',
+    category: '',
+    furnished: '',
+    parking: ''
+  });
 
   useEffect(() => {
     const getProperties = async () => {
       try {
-        const res = await api.get(`/properties/all`, {params: {search: searchTerm}});
+        const {minPrice, maxPrice, bedroomNumber, listingType, category, furnished, parking} = otherTerm;
+        const res = await api.get(`/properties/all`, {params: {
+          search: searchTerm,
+          minPrice: minPrice,
+          maxPrice: maxPrice,
+          bedrooms: bedroomNumber,
+          listingType: listingType,
+          category: category,
+          furnished: furnished,
+          parking: parking
+        }});
         setProperties(res.data);
         setLoading(false);
       } catch (error) {
@@ -23,7 +42,7 @@ export default function Home() {
       }
     };
     getProperties();
-  }, [searchTerm]);
+  }, [searchTerm, otherTerm]);
 
   return (
     <Layout>
@@ -39,7 +58,7 @@ export default function Home() {
             </div>
             {/* <Search /> */}
             <div className='w-full max-w-[43rem] min-w-60 mt-8 mb-16'>
-              <Search setSearchTerm={setSearchTerm} /> {/* Pass setSearchTerm to the Search component */}
+              <Search setSearchTerm={setSearchTerm} setOtherTerm={setOtherTerm} /> {/* Pass setSearchTerm to the Search component */}
             </div>
           </div>
         </div>
