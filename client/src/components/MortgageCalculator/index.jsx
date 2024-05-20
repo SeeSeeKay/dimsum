@@ -40,6 +40,7 @@ const MortgageCalculator = () => {
             Loan Amount:
             <input
               type="number"
+              min={0.01}
               value={loanAmount}
               onChange={(e) => setLoanAmount(e.target.value)}
               required
@@ -52,6 +53,7 @@ const MortgageCalculator = () => {
             <input
               type="number"
               step="0.01"
+              min={0.01}
               value={interestRate}
               onChange={(e) => setInterestRate(e.target.value)}
               required
@@ -63,6 +65,7 @@ const MortgageCalculator = () => {
             Loan Term (years):
             <input
               type="number"
+              min={0.1}
               value={loanTerm}
               onChange={(e) => setLoanTerm(e.target.value)}
               required
