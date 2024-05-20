@@ -150,50 +150,6 @@ export default function Profile() {
                         onChange={(e) => setPhone(e.target.value)}
                         autoComplete='numder'/>
                     </div>
-                    {/* Current Password */}
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="grid-password">
-                        Current Password
-                      </label>
-                      <input
-                        type={passwordShown ? 'text' : 'password'}
-                        className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder="Current Password"
-                        style={{ transition: "all .15s ease" }}
-                        name='currentPassword'
-                        autoComplete='current-password'/>
-                        <span
-                          onClick={togglePassword}
-                          className='text-gray-700 text-2xl absolute right-3 top-[53%] '>
-                          {passwordShown ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-                        </span>
-                    </div>
-                    {/* The new Password */}
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="grid-password" >
-                        New Password
-                      </label>
-                      <input
-                        type={passwordShown ? 'text' : 'password'}
-                        className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder="New Password"
-                        style={{ transition: "all .15s ease" }}
-                        name='newPassword'
-                        autoComplete='new-password' />
-                    </div>
-                    {/* Submit button */}
-                    <div className="text-center mt-10">
-                      <button
-                        className="bg-secondary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                        type="submit"
-                        style={{ transition: "all .15s ease" }} >
-                        { isLoading ? 'Loading...' : 'Update'}
-                      </button>
-                    </div>
                   </form>
                   {/* Change Password Button */}
                   <div className="relative w-full mb-3">
