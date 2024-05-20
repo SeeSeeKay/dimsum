@@ -90,7 +90,7 @@ export default function Property() {
           </div>
         ) : property ? (
           <div className="lg:w-8/12 mx-auto">
-            <div className="flex jaustify-between items-center w-full relative mb-4">
+            <div className="flex justify-between items-center w-full relative mb-4">
               <h1 className="text-3xl font-semibold text-gray-800">{property.title}</h1>
               <span className='hidden md:block bg-secondary text-sm px-3 py-2 ml-3 text-gray-50 rounded-md'>For {property.category.toUpperCase()}</span>
               {( userInfo?.data?._id == property?.ownerId?.id) ? (

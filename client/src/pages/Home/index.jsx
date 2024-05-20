@@ -33,8 +33,8 @@ export default function Home() {
           <div className="flex flex-col justify-center items-start py-4 mt-16 w-1/2">
             <div className="hero-title">
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold lg:font-bold text-gray-200">
-                Discover Most Suitable <br />
-                Properties in One Place
+                Find Your Desired <br />
+                Property In One Place
               </h1>
             </div>
             {/* <Search /> */}
