@@ -6,7 +6,8 @@ import {
   updateProperty, 
   deleteProperty,
   getMyListing,
-  searchProperties
+  searchProperties,
+  updateView
 } from '../controllers/property.controller.js';
 import { isAuthenticated } from '../middleware/auth.middleware.js';
 import upload from '../middleware/multer.middleware.js';
@@ -23,7 +24,7 @@ router.get('/get', searchProperties);
 router.post('/add', isAuthenticated, uploadImage, addProperty);
 router.get('/', isAuthenticated, getMyListing);
 router.get('/all', getAllProperties);
-router.get('/:id', getProperty);
+router.get('/:id', getProperty, updateView);
 router.put('/update/:id', isAuthenticated, uploadImage, updateProperty);
 router.delete('/delete/:id', isAuthenticated, deleteProperty);
 

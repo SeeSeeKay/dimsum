@@ -94,46 +94,62 @@ export const updateView = async (req, res, next) => {
 
 // Retrieve all properties
 export const getAllProperties = async (req, res, next) => {
-   // We look for a query parameter "search, price ..."
-  let {search, price, listingType, category} = req.query;
+  let { search, minPrice, maxPrice, bedroomNumber, listingType, category, furnished, parking } = req.query;
   let query = {};
 
-  if(search === undefined){  }
-
-
-  // Filter properties by type
-  if (listingType === undefined || listingType === 'all') {
+  // Filter properties by listing type
+  if (!listingType || listingType === 'all') {
+    query.listingType = { $in: ['apartments', 'houses', 'offices'] };
+  } else {
     query.listingType = listingType;
-    listingType = { $in: ['apartments', 'houses', 'offices'] };
-  };
-
-  // Filter properties by category
-  // if (category || category === undefined) {query.category = category};
-  if (category === undefined || category ) {
-    query.category = category;
-    category = { $in: ['sale', 'rent'] };
   }
 
+  // Filter properties by category
+  if (!category || category === 'all') {
+    query.category = { $in: ['sale', 'rent'] };
+  } else {
+    query.category = category;
+  }
 
+  // Filter properties by price range
+  if (minPrice || maxPrice) {
+    query.price = {};
+    if (minPrice) query.price.$gte = parseFloat(minPrice);
+    if (maxPrice) query.price.$lte = parseFloat(maxPrice);
+  }
 
-  try { 
-    const properties = await Property.find({
-      $or: [
-        { title: { $regex: search, $options: 'i' } }, 
-        { description: { $regex: search, $options: 'i' } }, 
-        // Search by property description (case-insensitive)
-      ],
-      listingType, 
-      category
-    }).
-    sort({ createdAt: 'desc' }).
-    populate('ownerId', '-password -refreshToken');
-    // sort from the latest to the earliest
-    // populates the ownerId field to include the user details associated with each property.
+  // Filter properties by bedroom number
+  if (bedroomNumber) {
+    query.bedrooms = parseInt(bedroomNumber, 10);
+  }
 
+  // Filter properties by furnished status
+  if (furnished) {
+    query.furnished = furnished === 'yes';
+  }
+
+  // Filter properties by parking status
+  if (parking) {
+    query.parking = parking === 'yes';
+  }
+
+  // Filter properties by search term (title or description)
+  if (search) {
+    query.$or = [
+      { title: { $regex: search, $options: 'i' } },
+      { description: { $regex: search, $options: 'i' } }
+    ];
+  }
+
+  console.log("Search query:", query);
+
+  try {
+    const properties = await Property.find(query)
+      .sort({ createdAt: 'desc' })
+      .populate('ownerId', '-password -refreshToken');
     res.status(200).json(properties);
   } catch (error) {
-    console.error(error);
+    console.error("getAllProperties:", error.message);
     next(error);
   }
 };
