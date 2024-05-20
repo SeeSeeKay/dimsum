@@ -60,7 +60,7 @@ export const updateUser = async (req, res, next) => {
         }
         res.
           status(200).json({ 
-            seccuss: 'User updated successfully.',
+            success: 'User updated successfully.',
             updatedUser
           });
     
@@ -69,7 +69,6 @@ export const updateUser = async (req, res, next) => {
       }
     }
 
-// Update user password
 export const updatePassword = async (req, res, next) => {
   const { currentPassword, newPassword } = req.body;
 
@@ -88,6 +87,11 @@ export const updatePassword = async (req, res, next) => {
     // Hash new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Log the passwords
+    console.log('Current Password:', currentPassword);
+    console.log('New Password:', newPassword);
+    console.log('Hashed New Password:', hashedPassword);
 
     user.password = hashedPassword;
     await user.save();
