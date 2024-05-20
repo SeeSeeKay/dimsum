@@ -24,7 +24,8 @@ router.get('/get', searchProperties);
 router.post('/add', isAuthenticated, uploadImage, addProperty);
 router.get('/', isAuthenticated, getMyListing);
 router.get('/all', getAllProperties);
-router.get('/:id', getProperty, updateView);
+router.get('/:id', getProperty);
+router.put('/:id', updateProperty);
 router.put('/update/:id', isAuthenticated, uploadImage, updateProperty);
 router.delete('/delete/:id', isAuthenticated, deleteProperty);
 
