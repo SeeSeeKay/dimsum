@@ -19,6 +19,7 @@ import Property from './pages/Property';
 import PropertyList from './pages/PropertyList';
 import Properties from './pages/Properties';
 import FavDashboard from "./pages/FavDashboard";
+import Calculator from "./pages/Calculator";
 
 
 // From routes/index
@@ -90,6 +91,7 @@ export default function App() {
             <Route path="/edit-property/:propertyId" element={<EditProperty />}/>
             <Route path="/my-listing" element={<PropertyList />}/>
             <Route path="/fav-listing" element={<FavDashboard />} /> 
+            <Route path="/mortgage-calculator" element={<Calculator />} />
           </Route>
           <Route path="*" element={<ErrorPage/>} />
       </Routes>

@@ -8,6 +8,22 @@ const LikeButton = (props) => {
 
   const [saved, setSaved] = useState(false);
 
+  useEffect(() => {
+    const getSavedProperty = async() => {
+      console.log("getSavedProperty in LikeButton executed.");
+      try{
+        const res = await api.get(`properties/save/${props.userId}/${props.propertyId}`);
+        console.log("getSavedProperty res : "+res.data);
+        res.data.length === 0 || res.data === null ? setSaved(false) : setSaved(true);
+      } catch(err){
+        console.log("Fail to check whether user has saved this property.");
+        toast.error(err.message);
+        // toast.error("Fail to check whether user has saved this property.");
+      }
+    }
+    getSavedProperty();
+  }, [props.propertyId]);
+
   const toggleLike = () => {
     setSaved(!saved);
 
@@ -19,7 +35,7 @@ const LikeButton = (props) => {
       propertyId: props.propertyId
     }
 
-    if(saved){
+    if(!saved){
       try{
         const res = api.post(`properties/save/add`, 
           buyerSavedProperty

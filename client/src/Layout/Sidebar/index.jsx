@@ -11,6 +11,7 @@ import { SlLayers, SlPlus, SlEnvolope, SlHome,
   SlSocialInstagram,
   SlSocialPintarest} from "react-icons/sl";
 import SidebarToggle from '../../components/SidebarToggle';
+import {GiCalculator} from "react-icons/gi";
 
 const menuItems = {
   // Main
@@ -23,7 +24,8 @@ const menuItems = {
   manageListing: [
     { name: "My Properties", icon: <SlHome/>, link: "/my-listing" },
     { name: "My Favorites", icon: <SlHeart/>, link: "/fav-listing" },
-    { name: "Reviews", icon: <SlBubble/>, link: "/dashboard" }
+    { name: "Reviews", icon: <SlBubble/>, link: "/dashboard" },
+    { name: "Mortgage Calculator", icon: <GiCalculator />, link: "/mortgage-calculator" }
   ],
   // manageAccount: [
   //   { name: "Profile", icon: <SlUser/>, link: "/profile" },
