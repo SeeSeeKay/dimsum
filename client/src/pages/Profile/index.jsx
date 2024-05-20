@@ -150,6 +150,15 @@ export default function Profile() {
                         onChange={(e) => setPhone(e.target.value)}
                         autoComplete='numder'/>
                     </div>
+                    {/* Submit button */}
+                    <div className="text-center mt-10">
+                      <button
+                        className="bg-secondary text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                        type="submit"
+                        style={{ transition: "all .15s ease" }} >
+                        { isLoading ? 'Loading...' : 'Update'}
+                      </button>
+                    </div>
                   </form>
                   {/* Change Password Button */}
                   <div className="relative w-full mb-3">
