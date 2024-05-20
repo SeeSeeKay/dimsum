@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import User, { userUpdateDetailsValidation } from '../models/user.model.js';
+import User, {userChangePasswordValidation, userUpdateDetailsValidation} from '../models/user.model.js';
 import createError from '../helpers/createError.js';
 import cloudinary from 'cloudinary'
 import fs from 'fs';
