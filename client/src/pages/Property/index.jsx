@@ -116,6 +116,11 @@ export default function Property() {
             </div>
             <div className="flex flex-col sm:flex-row">
               <div className="sm:w-2/3 sm:pr-4 sm:py-8 mt-4 sm:mt-0 border-b border-gray-200">
+              <div className="flex justify-between w-full mb-3">
+                  <p className="text-lg mb-3 flex items-center gap-1">
+                    {property.views} views
+                  </p>
+                </div>
                 {/* Address */}
                 <div className="flex justify-between w-full mb-3">
                   <p className="text-lg mb-3 flex items-center gap-1">
