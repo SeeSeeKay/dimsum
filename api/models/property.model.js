@@ -19,7 +19,7 @@ const PropertySchema = new mongoose.Schema({
   imageUrl: { type: String, required: false },
   ownerId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
   priceHistory: [priceChangeSchema], // Array of price change events
-  views: {type: Number, required: true},
+  views: {type: Number},
 }, { timestamps: true });
 
 // Adding virtual id for frontend friendliness
