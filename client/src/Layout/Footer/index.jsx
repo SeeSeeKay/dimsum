@@ -32,46 +32,8 @@ export default function Footer() {
               <li>
                 <a className="text-gray-600 hover:text-gray-800">About Us</a>
               </li>
-              <li>
-                <a className="text-gray-600 hover:text-gray-800">Blog</a>
-              </li>
             </nav>
           </div>
-          <div className="md:w-3/5 min-w-32 w-full px-2">
-            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">New Listing</h2>
-            <nav className="list-none mb-10">
-              <li>
-                <a className="text-gray-600 hover:text-gray-800">Buy Apartments</a>
-              </li>
-              <li>
-                <a className="text-gray-600 hover:text-gray-800">Buy Houses</a>
-              </li>
-              <li>
-                <a className="text-gray-600 hover:text-gray-800">Rent Houses</a>
-              </li>
-              <li>
-                <a className="text-gray-600 hover:text-gray-800">Rent Office</a>
-              </li>
-            </nav>
-          </div>
-          <div className="md:w-3/5 min-w-32 w-full px-2">
-            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">New Listing</h2>
-            <nav className="list-none mb-10">
-              <li>
-                <a className="text-gray-600 hover:text-gray-800">Buy Apartments</a>
-              </li>
-              <li>
-                <a className="text-gray-600 hover:text-gray-800">Buy Houses</a>
-              </li>
-              <li>
-                <a className="text-gray-600 hover:text-gray-800">Rent Houses</a>
-              </li>
-              <li>
-                <a className="text-gray-600 hover:text-gray-800">Rent Office</a>
-              </li>
-            </nav>
-          </div>
-
         </div>
       </div>
       <div className="bg-gray-100">
