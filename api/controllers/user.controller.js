@@ -30,6 +30,7 @@ export const getUserDetails = async (req, res, next) => {
 
 // Update user
 export const updateUser = async (req, res, next) => {
+  console.log("update user details")
   const { username, email, phone } = req.body;
   const file = req.file;
 
@@ -69,7 +70,9 @@ export const updateUser = async (req, res, next) => {
       }
     }
 
+// Update password
 export const updatePassword = async (req, res, next) => {
+  console.log("update password");
   const { currentPassword, newPassword } = req.body;
 
   try {
@@ -88,12 +91,8 @@ export const updatePassword = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    // Log the passwords
-    console.log('Current Password:', currentPassword);
-    console.log('New Password:', newPassword);
-    console.log('Hashed New Password:', hashedPassword);
-
-    user.password = hashedPassword;
+    // Update user's password
+    user.password = newPassword;
     await user.save();
 
     res.status(200).json({ success: 'Password updated successfully.' });
@@ -101,6 +100,7 @@ export const updatePassword = async (req, res, next) => {
     next(createError(500, 'Server error!'));
   }
 };
+
 
 
 // Delete user from the database

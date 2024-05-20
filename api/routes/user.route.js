@@ -17,11 +17,11 @@ const router = express.Router();
 // Uploding files
 const uploadImage = upload.single('avatar');
 
-router.get('/', isAuthenticated, getUsers);
-router.
-  route('/profile').
-  get(isAuthenticated, getUserDetails).
-  put(isAuthenticated, uploadImage, updateUser, updatePassword);
+router.route('/profile')
+  .get(isAuthenticated, getUserDetails)
+  .put(isAuthenticated, uploadImage, updateUser); // Only update user details here
+
+router.put('/profile/password', isAuthenticated, updatePassword);
 
 router.delete('/delete/:id', deleteUser);
 // router.post('/dashboard', verifyToken, dashdoard)

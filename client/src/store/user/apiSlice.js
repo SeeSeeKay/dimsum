@@ -64,7 +64,7 @@ export const usersApi = createApi({
 
     updatePassword: builder.mutation({
       query: (data) => ({
-        url: `${USER_URL}/profile`,
+        url: `${USER_URL}/profile/password`,
         method: 'PUT',
         body: data,
       }),
