@@ -69,6 +69,29 @@ export const getProperty = async (req, res, next) => {
   }
 };
 
+export const updateView = async (req, res, next) => {
+  const propID = req.params.id;
+
+  try{
+    const property = await Property.findById(propID).populate('ownerId', '-password -refreshToken');
+    if(!property){
+      return next(createError(404, 'No property found'));
+    }
+    let updatedProperty = property;
+    updatedProperty.views+1;
+    property = await Property.findByIdAndUpdate(propID, updatedProperty, {new:true, overwrite: true});
+    if(!property){
+      return next(createError(404, 'Property\'s views fail to update.'));
+    }
+    res.status(200).json({
+      message: 'Property\'s views updated successfully.',
+      property
+    });
+  }catch(err){
+    console.log("updateViews : "+err.message);
+  }
+}
+
 // Retrieve all properties
 export const getAllProperties = async (req, res, next) => {
    // We look for a query parameter "search, price ..."
