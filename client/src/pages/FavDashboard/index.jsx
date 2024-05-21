@@ -52,7 +52,7 @@ const FavDashboard = () => {
         </div>
           { savedProperties.length === 0 || properties === null? 
             <div className='w-full h-32 m-auto '>
-              <p className='text-3xl text-gray-400 font-samibold mb-7'>No favourite properties</p>
+              <p className='text-3xl text-gray-400 font-samibold mb-7'>No favorite properties</p>
             </div> :        
             properties.map((p, index) => {
               return <PropertyCard propsCard={p} key={index} />
