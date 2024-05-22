@@ -72,17 +72,14 @@ export const getProperty = async (req, res, next) => {
 
 export const updateView = async (req, res, next) => {
   const propID = req.params.id;
-  const updatedProperty = req.body;
-  console.log("UpdatedProperty view hahaha : "+updatedProperty.views);
-  console.log("updateView in controller executed.");
+
   try{
     const property = await Property.findById(propID).populate('ownerId', '-password -refreshToken');
     if(!property){
       return next(createError(404, 'No property found'));
     }
-    // let updatedProperty = property;
-    // updatedProperty.views+1;
-    property = await Property.findByIdAndUpdate(propID, updatedProperty, {new:true, overwrite: true});
+    property.views+=1;
+    await property.save();
     if(!property){
       return next(createError(404, 'Property\'s views fail to update.'));
     }

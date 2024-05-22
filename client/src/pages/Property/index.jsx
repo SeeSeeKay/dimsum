@@ -60,12 +60,10 @@ export default function Property() {
     const getProperty = async () => {
       try {
         const res = await api.get(`/properties/${params.propertyId}`);
-        console.log("views: "+res.data.views);
-        // const viewRes = await api.put(`/properties/${params.propertyId}`);
         setProperty(res.data);
         setLoading(false);
-        const updatedProperty = res.data.views += 1;
-        const viewRes = await api.put(`/properties/${params.propertyId}`, updatedProperty);
+        const viewRes = await api.put(`/properties/views/${params.propertyId}`);
+        toast.success("ViewRes : "+viewRes.data);
       } catch (error) {
         console.error(error);
         setLoading(false);
@@ -73,19 +71,6 @@ export default function Property() {
     };
     getProperty();
   }, [params.propertyId]);
-
-  // useEffect(() => {
-  //   const updateViews = async() => {
-  //     try{
-  //       console.log("updatedProperty for views : "+property);
-  //       const updatedProperty = property.views+1;
-  //       const res = await api.put(`/properties/${params.propertyId}`, { views: updatedProperty.views});
-  //     } catch (err){
-  //       console.log("updateViews : "+err.message);
-  //     }
-  //   }
-  //   updateViews();
-  // }, []);
 
 
   // console.log(property?.ownerId?.avatar);

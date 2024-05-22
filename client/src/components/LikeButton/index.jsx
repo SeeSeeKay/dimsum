@@ -12,9 +12,11 @@ const LikeButton = (props) => {
     const getSavedProperty = async() => {
       console.log("getSavedProperty in LikeButton executed.");
       try{
+        // if(props.userId != null || props.userId != undefined){
         const res = await api.get(`properties/save/${props.userId}/${props.propertyId}`);
         console.log("getSavedProperty res : "+res.data);
         res.data.length === 0 || res.data === null ? setSaved(false) : setSaved(true);
+      // }
       } catch(err){
         console.log("Fail to check whether user has saved this property.");
         toast.error(err.message);
