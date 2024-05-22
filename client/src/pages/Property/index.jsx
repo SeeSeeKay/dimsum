@@ -63,7 +63,7 @@ export default function Property() {
         setProperty(res.data);
         setLoading(false);
         const viewRes = await api.put(`/properties/views/${params.propertyId}`);
-        toast.success("ViewRes : "+viewRes.data);
+        // toast.success("ViewRes : "+viewRes.data);
       } catch (error) {
         console.error(error);
         setLoading(false);
