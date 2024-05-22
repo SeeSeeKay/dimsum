@@ -58,7 +58,7 @@ export default function AddProperty() {
         ...formData,
         imageUrl: formData.imageUrl,
         ownerId: userInfo.data._id,
-        views: 0
+        views: 1
       };
   
       const res = await api.post('/properties/add', 
